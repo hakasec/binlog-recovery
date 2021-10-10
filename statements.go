@@ -512,7 +512,7 @@ func getSQLTypeName(t uint8) (typename string, err error) {
 	case mySQLGeometry:
 		typename = "GEOMETRY"
 	default:
-		err = fmt.Errorf("No such SQL type %d", t)
+		err = fmt.Errorf("no such SQL type %d", t)
 	}
 	return typename, err
 }
@@ -625,7 +625,7 @@ func parseDataType(s string) (t uint8, meta uint16, err error) {
 	case "GEOMETRY":
 		t = mySQLGeometry
 	default:
-		err = fmt.Errorf("No such SQL type %s", s)
+		err = fmt.Errorf("no such SQL type %s", s)
 	}
 
 	return

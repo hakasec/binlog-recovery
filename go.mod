@@ -1,20 +1,22 @@
 module hakasec/binlog-runner
 
-go 1.12
+go 1.17
 
 require (
-	github.com/go-sql-driver/mysql v1.4.1
-	github.com/howeyc/gopass v0.0.0-20170109162249-bf9dde6d0d2c
-	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
-	github.com/pingcap/errors v0.11.4 // indirect
-	github.com/pingcap/parser v0.0.0-20190704100355-d4665e284d1e // indirect
-	github.com/pingcap/tipb v0.0.0-20190617140251-c0b8f1a8c839 // indirect
+	github.com/go-mysql-org/go-mysql v1.3.0
+	github.com/go-sql-driver/mysql v1.6.0
+	github.com/howeyc/gopass v0.0.0-20210920133722-c8aef6fb66ef
+)
+
+require (
+	github.com/pingcap/errors v0.11.5-0.20201126102027-b0a155152ca3 // indirect
+	github.com/satori/go.uuid v1.2.0 // indirect
+	github.com/shopspring/decimal v1.2.0 // indirect
+	github.com/siddontang/go v0.0.0-20180604090527-bdc77568d726 // indirect
 	github.com/siddontang/go-log v0.0.0-20190221022429-1e957dd83bed // indirect
-	github.com/siddontang/go-mysql v0.0.0-20190618002340-dbe0224ac097
-	github.com/sirupsen/logrus v1.4.2 // indirect
-	github.com/stretchr/objx v0.2.0 // indirect
-	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4 // indirect
-	golang.org/x/net v0.0.0-20190628185345-da137c7871d7 // indirect
-	golang.org/x/sys v0.0.0-20190626221950-04f50cda93cb // indirect
-	golang.org/x/tools v0.0.0-20190703212419-2214986f1668 // indirect
+	go.uber.org/atomic v1.9.0 // indirect
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
+	golang.org/x/sys v0.0.0-20211007075335-d3039528d8ac // indirect
+	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )

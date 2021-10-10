@@ -61,7 +61,7 @@ func containsStr(l []string, val string) bool {
 
 func containsStrCaseInsensitive(l []string, val string) bool {
 	for _, s := range l {
-		if strings.ToUpper(s) == strings.ToUpper(val) {
+		if strings.EqualFold(s, val) {
 			return true
 		}
 	}

@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/go-mysql-org/go-mysql/replication"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/siddontang/go-mysql/replication"
 )
 
 // BinlogExecutor reads in a MySQL binlog and executes INSERT/UPDATES on
@@ -161,10 +161,11 @@ func (e *BinlogExecutor) doesRowExist(
 	ss := NewSelectStatement(e.currentSchema, e.currentTable, conditions)
 
 	rows, err := e.conn.Query(ss.String())
-	defer rows.Close()
 	if err != nil {
 		return false, err
 	}
+
+	defer rows.Close()
 
 	us := NewUseStatement(e.currentSchema)
 	_, err = e.conn.Exec(us.String())
@@ -188,7 +189,7 @@ func (e *BinlogExecutor) mapTable(event *replication.TableMapEvent) error {
 	for i := uint64(0); i < event.ColumnCount; i++ {
 		t, meta, err := parseDataType(current[i].Type)
 		if err != nil {
-			return fmt.Errorf("Error mapping table: %v", err)
+			return fmt.Errorf("error mapping table: %v", err)
 		}
 
 		cd := NewColumnDef(current[i].Name, event.ColumnType[i])
@@ -250,7 +251,7 @@ func (e *BinlogExecutor) executeInsert(event *replication.RowsEvent) error {
 
 	cols, err := e.getTableColumns(e.currentSchema, e.currentTable)
 	if err != nil {
-		return fmt.Errorf("Error getting column info: %v", err)
+		return fmt.Errorf("error getting column info: %v", err)
 	}
 
 	for _, row := range event.Rows {
@@ -270,11 +271,11 @@ func (e *BinlogExecutor) executeInsertSingle(vals []string) error {
 		if strings.Contains(err.Error(), "Duplicate entry") {
 			return nil
 		}
-		return fmt.Errorf("Error inserting: %v", err)
+		return fmt.Errorf("error inserting: %v", err)
 	}
 
 	if r, _ := result.RowsAffected(); r <= 0 {
-		return fmt.Errorf("Failed to insert record: %v", is.String())
+		return fmt.Errorf("failed to insert record: %v", is.String())
 	}
 
 	return nil
@@ -285,7 +286,7 @@ func (e *BinlogExecutor) executeUpdate(event *replication.RowsEvent) error {
 
 	cols, err := e.getTableColumns(e.currentSchema, e.currentTable)
 	if err != nil {
-		return fmt.Errorf("Error getting column info: %v", err)
+		return fmt.Errorf("error getting column info: %v", err)
 	}
 
 	for _, row := range event.Rows {
@@ -300,7 +301,7 @@ func (e *BinlogExecutor) executeUpdate(event *replication.RowsEvent) error {
 func (e *BinlogExecutor) executeUpdateSingle(vals []string) error {
 	cols, err := e.getTableColumns(e.currentSchema, e.currentTable)
 	if err != nil {
-		return fmt.Errorf("Error getting column info: %v", err)
+		return fmt.Errorf("error getting column info: %v", err)
 	}
 	condMap := make(map[string]string)
 	valMap := make(map[string]string)
@@ -321,7 +322,7 @@ func (e *BinlogExecutor) executeUpdateSingle(vals []string) error {
 	)
 	_, err = e.conn.Exec(us.String())
 	if err != nil {
-		return fmt.Errorf("Error updating: %v", err)
+		return fmt.Errorf("error updating: %v", err)
 	}
 	return nil
 }
@@ -331,7 +332,7 @@ func (e *BinlogExecutor) executeDelete(event *replication.RowsEvent) error {
 
 	cols, err := e.getTableColumns(e.currentSchema, e.currentTable)
 	if err != nil {
-		return fmt.Errorf("Error getting column info: %v", err)
+		return fmt.Errorf("error getting column info: %v", err)
 	}
 
 	for _, row := range event.Rows {
@@ -346,7 +347,7 @@ func (e *BinlogExecutor) executeDelete(event *replication.RowsEvent) error {
 func (e *BinlogExecutor) executeDeleteSingle(vals []string) error {
 	cols, err := e.getTableColumns(e.currentSchema, e.currentTable)
 	if err != nil {
-		return fmt.Errorf("Error getting table info: %v", err)
+		return fmt.Errorf("error getting table info: %v", err)
 	}
 	condMap := make(map[string]string)
 	for _, col := range cols {
@@ -361,7 +362,7 @@ func (e *BinlogExecutor) executeDeleteSingle(vals []string) error {
 	)
 	_, err = e.conn.Exec(ds.String())
 	if err != nil {
-		return fmt.Errorf("Error deleting: %v", err)
+		return fmt.Errorf("error deleting: %v", err)
 	}
 	return nil
 }
