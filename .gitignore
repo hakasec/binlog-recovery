@@ -1,0 +1,8 @@
+# vscode config
+.vscode/
+
+# position tracking text file
+pos.txt
+
+# vscode debug binary
+__debug_bin
