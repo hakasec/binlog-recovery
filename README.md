@@ -7,16 +7,19 @@ This is a program for recovering data from row-based binlogs. It takes a binlog 
 To build the project run:
 
 Get dependencies:
+
 ```sh
 go mod tidy
 ```
 
 Build project:
+
 ```sh
 go build
 ```
 
 To install to the PATH (optional):
+
 ```sh
 go install
 ```
@@ -25,7 +28,7 @@ go install
 
 To run the program, run `binlog-runner` (either from installing or locally) from the command line and use the below options:
 
-```
+```_
 Usage:
   -binlog string
         Required. Starting binlog file
