@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/howeyc/gopass"
+	"golang.org/x/term"
 )
 
 // CliFlags contains flags captured from the command line
@@ -90,12 +90,9 @@ func (c *CliFlags) populateFlagsFromCli() {
 
 	// prompt for password
 	if c.PromptPassword {
-		pass, _ := gopass.GetPasswdPrompt(
-			"Password: ",
-			true,
-			os.Stdin,
-			f.Output(),
-		)
+		fmt.Fprint(f.Output(), "Password: ")
+		pass, _ := term.ReadPassword(int(os.Stdin.Fd()))
+		fmt.Fprintln(f.Output())
 		c.Password = string(pass)
 	}
 }

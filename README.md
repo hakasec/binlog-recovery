@@ -1,6 +1,6 @@
 # BinlogRecovery
 
-This is a program for recovering data from row-based binlogs. It takes a binlog file, position, and a connection to a targeted slave server and executes row-based INSERT/UPDATE events.
+This is a program for recovering data from row-based binlogs. It takes a binlog file, position, and a connection to a targeted slave server and executes row-based INSERT/UPDATE events. Any UPDATE that fails is changed into an INSERT.
 
 ## Building
 
@@ -15,13 +15,13 @@ go mod tidy
 Build project:
 
 ```sh
-go build
+go build -o binlog-runner .
 ```
 
 To install to the PATH (optional):
 
 ```sh
-go install
+go install .
 ```
 
 ## Usage
